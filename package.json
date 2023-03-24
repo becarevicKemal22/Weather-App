@@ -6,7 +6,9 @@
   "scripts": {
     "test": "test",
     "build": "webpack",
-    "start": "webpack serve --open"
+    "start": "webpack serve --open",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "repository": {
     "type": "git",
@@ -20,6 +22,7 @@
   "homepage": "https://github.com/becarevicKemal22/Weather-App",
   "devDependencies": {
     "css-loader": "^6.7.3",
+    "gh-pages": "^5.0.0",
     "html-webpack-plugin": "^5.5.0",
     "style-loader": "^3.3.2",
     "webpack": "^5.76.3",
