@@ -17,7 +17,7 @@
   "bugs": {
     "url": "https://github.com/becarevicKemal22/Weather-App/issues"
   },
-  "homepage": "https://github.com/becarevicKemal22/Weather-App#readme",
+  "homepage": "https://github.com/becarevicKemal22/Weather-App",
   "devDependencies": {
     "css-loader": "^6.7.3",
     "html-webpack-plugin": "^5.5.0",
