@@ -14,16 +14,20 @@
     "type": "git",
     "url": "git+https://github.com/becarevicKemal22/Weather-App.git"
   },
-  "author": "",
+  "author": "Kemal Becarevic",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/becarevicKemal22/Weather-App/issues"
   },
   "homepage": "https://github.com/becarevicKemal22/Weather-App",
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^6.3.0",
     "css-loader": "^6.7.3",
+    "eslint": "^8.36.0",
     "gh-pages": "^5.0.0",
     "html-webpack-plugin": "^5.5.0",
+    "sass": "^1.60.0",
+    "sass-loader": "^13.2.1",
     "style-loader": "^3.3.2",
     "webpack": "^5.76.3",
     "webpack-cli": "^5.0.1",

@@ -1,0 +1,34 @@
+@import './_config.sass'
+
+$fa-font-path: '~@fortawesome/fontawesome-free/webfonts'
+@import '~@fortawesome/fontawesome-free/scss/fontawesome'
+@import '~@fortawesome/fontawesome-free/scss/solid'
+@import '~@fortawesome/fontawesome-free/scss/regular'
+
+*
+    font-family: 'Arial', 'Helvetica', 'Sans-serif'
+    box-sizing: border-box
+    margin: 0
+    padding: 0
+    font-size: 1.1rem
+
+body
+    background-color: $color-background
+
+.main
+    padding: 5em
+    display: flex
+    gap: 1.75em
+
+.displays
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+    flex-grow: 10
+    gap: 1.75em
+
+.tabbedDisplay
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+    flex-grow: 9
