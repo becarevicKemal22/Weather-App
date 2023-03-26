@@ -1,8 +1,9 @@
 import './style.sass';
-import {TabButton} from './components/tabButton/tabButton';
+import { TabButton } from './components/tabButton/tabButton';
 import { SearchBar } from './components/searchBar/searchBar';
 import { MainDisplay} from './components/mainDisplay/mainDisplay';
 import { SecondaryDisplay } from './components/secondaryDisplay/secondaryDisplay';
+import { TabbedDisplay } from './components/tabbedDisplay/tabbedDisplay';
 import { Weather } from './Weather';
 
 class App{
@@ -11,22 +12,58 @@ class App{
 
     this.main = document.querySelector('.main');
     this.leftSide = this.main.querySelector('.displays');
-    this.rightSide = this.main.querySelector('.tabbedDisplay');
+    this.rightSide = this.main.querySelector('.secondDisplay');
+    this.buttonContainer = this.rightSide.querySelector(".tabs");
     this.messageDisplay = this.main.querySelector('messageDisplay');
 
     this.searchBar = new SearchBar();
     this.leftSide.appendChild(this.searchBar.getElement());
 
+    this.searchBar.getElement().querySelector('input').addEventListener("keypress", (event) => {
+      if(event.key === "Enter"){
+        event.preventDefault();
+        this.getWeatherForSearch(this.searchBar.getElement().querySelector('input').value);
+        this.searchBar.getElement().querySelector('input').value = "";
+      }
+    });
+    
+    this.searchBar.getElement().querySelector('button').addEventListener("click", () => {
+      this.getWeatherForSearch(this.searchBar.getElement().querySelector('input').value); 
+      this.searchBar.getElement().querySelector('input').value = "";
+    });
+
     this.mainDisplay = new MainDisplay();
     this.leftSide.appendChild(this.mainDisplay.getElement());
-    //* Add request for current location and appropriate display if not allowed
 
     this.secondaryDisplay = new SecondaryDisplay();
     this.leftSide.appendChild(this.secondaryDisplay.getElement());
 
+    this.hourlyButton = new TabButton("Hourly");
+    this.hourlyButton.setActive();
+
+    
+    this.buttonContainer.appendChild(this.hourlyButton.getElement());
+    
+    this.dailyButton = new TabButton("7-Day");
+    this.buttonContainer.appendChild(this.dailyButton.getElement());
+    
+    this.tabbedDisplay = new TabbedDisplay();
+    this.rightSide.appendChild(this.tabbedDisplay.getElement());
+    
+    this.hourlyButton.getElement().addEventListener("click", () => {
+      this.hourlyButton.setActive();
+      this.dailyButton.setInactive();
+      this.tabbedDisplay.changeTab(1);
+    })
+
+    this.dailyButton.getElement().addEventListener("click", () => {
+      this.dailyButton.setActive();
+      this.hourlyButton.setInactive();
+      this.tabbedDisplay.changeTab(2);
+    })
+
     this.title = null;
     this.text = null;
-    
   }
 
   getCurrentPosition(){
@@ -54,7 +91,7 @@ class App{
       const parsed = this.parseRawWeatherData(data);
       this.mainDisplay.updateDisplay(parsed.mainDisplayData);
       this.secondaryDisplay.updateDisplay(parsed.secondaryDisplayData);
-      
+      this.tabbedDisplay.updateDisplay(parsed.hourlyData, parsed.dailyData);
       this.removeMessage();
     }
     catch{
@@ -82,13 +119,17 @@ class App{
     const hourlyData = [];
     let currentAddedHours = 2;
     for(let i = 0; i < 7; i++){
+      
       const dataForHour = data.hourly[currentAddedHours];
       if(hour + currentAddedHours >= 24){
-        dataForHour.hour = hour + currentAddedHours - 24;
+        dataForHour.hour = String(hour + currentAddedHours - 24).padStart(2, '0');
       }else{
-        dataForHour.hour = hour + currentAddedHours;
+        dataForHour.hour = String(hour + currentAddedHours).padStart(2, '0');
       }
-      hourlyData[i] = dataForHour; 
+      let date = new Date(dataForHour.dt * 1000);
+      dataForHour.date = String(date.getDate()).padStart(2, '0') + '/' + String(date.getMonth() + 1).padStart(2, '0');
+      dataForHour.temp = String(Math.round(dataForHour.temp)).padStart(2, ' ');
+      hourlyData[i] = dataForHour;
       currentAddedHours += 3;
     }
 
@@ -111,6 +152,8 @@ class App{
   }
 
   displayMessage(message){
+    this.rightSide.classList.add("hidden");
+
     this.leftSide.classList.add("message");
     this.mainDisplay.getElement().remove();
     this.secondaryDisplay.getElement().remove();
@@ -133,6 +176,32 @@ class App{
     this.leftSide.appendChild(this.mainDisplay.getElement());
     this.leftSide.appendChild(this.secondaryDisplay.getElement());
     this.leftSide.classList.remove("message");
+
+    this.rightSide.classList.remove("hidden");
+  }
+
+  async getWeatherForSearch(value){
+    try{
+      this.removeMessage();
+      this.displayMessage({"title": "Loading...", "text": "We're trying to load your location"})
+
+      let location = await this.weather.getLocationFromCityName(value);
+      const data = await this.weather.getWeatherForLocation(location.lat, location.lon, location);
+      const parsed = this.parseRawWeatherData(data);
+
+      this.mainDisplay.updateDisplay(parsed.mainDisplayData);
+      this.secondaryDisplay.updateDisplay(parsed.secondaryDisplayData);
+      this.tabbedDisplay.updateDisplay(parsed.hourlyData, parsed.dailyData);
+
+      this.hourlyButton.setActive();
+      this.dailyButton.setInactive();
+      this.tabbedDisplay.changeTab(1);
+
+      this.removeMessage();
+    }catch(err){
+      this.removeMessage();
+      this.displayMessage({"title": "Oops! Something went wrong", "text": "We couldn't find that location. Check if you've spelt it correctly."})
+    }
   }
 }
 

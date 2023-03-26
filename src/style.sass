@@ -11,13 +11,13 @@ $fa-font-path: '~@fortawesome/fontawesome-free/webfonts'
     margin: 0
     padding: 0
     font-size: 1.1rem
-
 body
     background-color: $color-background
 
 .main
     padding: 5em
     display: flex
+    justify-content: center
     gap: 1.75em
 
 .displays
@@ -26,6 +26,8 @@ body
     justify-content: space-between
     flex-grow: 10
     gap: 1.75em
+
+    max-width: 750px
 
     &.message
         justify-content: center
@@ -41,8 +43,31 @@ body
     font-size: 1.2em
     align-self: center
 
-.tabbedDisplay
+.secondDisplay
     display: flex
     flex-direction: column
     justify-content: space-between
     flex-grow: 9
+    gap: 1.75em
+    max-width: 650px
+
+    &.hidden
+        display: none
+
+.tabs
+    display: flex
+    justify-content: space-around
+    gap: 2.5em
+
+@media screen and (max-width: 768px)
+    *
+        font-size: 0.85rem
+        
+    .main
+        flex-direction: column
+        align-items: stretch
+        padding: 2.5em
+
+@media screen and (min-width: 767px) and (max-width: 992px)
+    *
+        font-size: 0.9rem

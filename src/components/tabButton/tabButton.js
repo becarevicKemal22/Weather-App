@@ -13,7 +13,7 @@ export class TabButton{
         this.htmlEl.classList.add("active");
     }
 
-    setUnactive(){
+    setInactive(){
         this.htmlEl.classList.remove("active");
     }
 
