@@ -2,6 +2,7 @@ import './style.sass';
 import {TabButton} from './components/tabButton/tabButton';
 import { SearchBar } from './components/searchBar/searchBar';
 import { MainDisplay} from './components/mainDisplay/mainDisplay';
+import { SecondaryDisplay } from './components/secondaryDisplay/secondaryDisplay';
 import { Weather } from './Weather';
 
 class App{
@@ -18,6 +19,9 @@ class App{
     this.mainDisplay = new MainDisplay();
     this.leftSide.appendChild(this.mainDisplay.getElement());
     //* Add request for current location and appropriate display if not allowed
+
+    this.secondaryDisplay = new SecondaryDisplay();
+    this.leftSide.appendChild(this.secondaryDisplay.getElement());
     
   }
 
@@ -44,6 +48,7 @@ class App{
       console.log(data);
       const parsed = this.parseRawWeatherData(data);
       this.mainDisplay.updateDisplay(parsed.mainDisplayData);
+      this.secondaryDisplay.updateDisplay(parsed.secondaryDisplayData);
     }
     catch{
 
@@ -60,8 +65,16 @@ class App{
       "code": data.current.weather[0].id
     }
 
+    const secondaryDisplayData = {
+      "feelsLike": data.current.feels_like,
+      "humidity": data.current.humidity,
+      "wind": data.current.wind_speed,
+      "UV": data.current.uvi
+    }
+
     return {
       "mainDisplayData": mainDisplayData,
+      "secondaryDisplayData": secondaryDisplayData
     }
   }
 }
