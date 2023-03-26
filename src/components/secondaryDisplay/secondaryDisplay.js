@@ -9,7 +9,6 @@ export class SecondaryDisplay{
     }
 
     updateDisplay(data){
-        console.log(this.htmlEl.querySelector('#fl'));
         this.htmlEl.querySelector('#fl').textContent = Math.round(data.feelsLike) + "°C";
         this.htmlEl.querySelector('#h').textContent = data.humidity + "%";
         this.htmlEl.querySelector('#w').textContent = (Math.round(data.wind * 10) / 10) + " km/h";
