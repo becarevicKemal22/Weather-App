@@ -8,7 +8,7 @@ export class Weather{
 
         const data = await result.json();
 
-        const city = await fetch(`http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=2&appid=${this.apiKey}`);
+        const city = await fetch(`https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=2&appid=${this.apiKey}`);
         const cityList = await city.json();
         const cityName = cityList[0].name.replace('City of ', '');
 
