@@ -32,6 +32,8 @@ class App{
       this.searchBar.getElement().querySelector('input').value = "";
     });
 
+    console.log(document.querySelector('.pac-container'));
+
     this.mainDisplay = new MainDisplay();
     this.leftSide.appendChild(this.mainDisplay.getElement());
 
@@ -68,26 +70,42 @@ class App{
 
   getCurrentPosition(){
     return new Promise((resolve, reject) => {
-      if(!navigator.geolocation){
-        reject("Navigator API not available");
-      }
-      navigator.geolocation.getCurrentPosition((position) => {
-        let lat = position.coords.latitude;
-        let lon = position.coords.longitude;
+      // if(!navigator.geolocation){
+      //   reject("Navigator API not available");
+      // }
+      // 
+      // });
+      const response = fetch("https://ipinfo.io/json?token=9f54b5ca88b3df");
+      response.then((data) => {
+        return data.json();
+      }).then((data) => {
         resolve({
-          lat: lat,
-          lon: lon
+          lat: data.loc.split(",")[0],
+          lon: data.loc.split(",")[1]
         });
-      });
+      }).catch((err) => {
+        console.log("Error: " + err);
+        if(!navigator.geolocation){
+            reject("Couldn't get location");
+          }
+        navigator.geolocation.getCurrentPosition((position) => {
+            let lat = position.coords.latitude;
+            let lon = position.coords.longitude;
+            resolve({
+              lat: lat,
+              lon: lon
+            });
+      })
     });
-  }
+  });
+}
+
 
   async tryCurrentLocation(){
     try{
       this.displayMessage({"title": "Loading...", "text": "We're trying to load your location"})
       const location = await this.getCurrentPosition();
       const data = await this.weather.getWeatherForLocation(location.lat, location.lon);
-      console.log(data);
       const parsed = this.parseRawWeatherData(data);
       this.mainDisplay.updateDisplay(parsed.mainDisplayData);
       this.secondaryDisplay.updateDisplay(parsed.secondaryDisplayData);

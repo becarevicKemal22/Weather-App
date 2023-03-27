@@ -7,8 +7,9 @@
     "test": "test",
     "build": "webpack",
     "build:prod": "webpack --mode production --config webpack.prod.js",
+    "copy": "@powershell copy './CNAME' './prod/'",
     "start": "webpack serve --open --no-client-overlay-warnings",
-    "predeploy": "npm run build:prod",
+    "predeploy": "npm run build:prod && npm run copy",
     "deploy": "gh-pages -d prod"
   },
   "repository": {

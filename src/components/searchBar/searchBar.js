@@ -13,7 +13,8 @@ export class SearchBar{
         let options = {
             types: ["(cities)"]
         }
-        const autocomplete = new google.maps.places.Autocomplete(this.input, options);
+
+        const autocomplete = new google.maps.places.Autocomplete(this.input, options);        
     }
 
     getElement(){

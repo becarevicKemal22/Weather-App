@@ -57,13 +57,18 @@
         &:-ms-keyboard-active
             background: linear-gradient(90deg, $color-primary, $color-secondary)
 
+        & > *:last-child
+            color: $color-muted
+        
         .pac-item-query
             color: white
             font-size: 2em
+            padding-right: 0.3em
 
             .pac-matched
                 font-weight: normal
                 font-size: 1em
+    
 
     .pac-item-selected
         background: linear-gradient(90deg, $color-primary, $color-secondary)

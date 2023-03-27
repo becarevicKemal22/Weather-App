@@ -38,3 +38,29 @@ export class Weather{
         return loc;
     }
 }
+
+export function getIconClassNameForWeatherCode(code){
+    const codeFirstDigit = parseInt(code.toString().charAt(0));
+    if(codeFirstDigit == 2){
+        return "fa-solid fa-cloud-bolt fa-fw";
+    }
+    else if(codeFirstDigit == 3){
+        return "fa-solid fa-cloud-sun-rain fa-fw";
+    }
+    else if(codeFirstDigit == 5){
+        return "fa-solid fa-cloud-showers-heavy fa-fw";
+    }
+    else if(codeFirstDigit == 6){
+        return "fa-solid fa-cloud-meatball fa-fw";
+    }
+    else if(codeFirstDigit == 7){
+        return "fa-solid fa-smog fa-fw";
+    }
+    else if(codeFirstDigit == 8){
+        if(code == 800){
+            return "fa-solid fa-sun fa-fw";
+        }else{
+            return "fa-solid fa-cloud fa-fw";
+        }
+    }
+}

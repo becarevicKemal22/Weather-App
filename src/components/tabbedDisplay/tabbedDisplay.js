@@ -1,6 +1,8 @@
 import template from './tabbedDisplayTemplate'
 import './tabbedDisplay.sass'
 
+import { getIconClassNameForWeatherCode } from '../../Weather';
+
 export class TabbedDisplay{
     constructor(){
         this.htmlEl = document.createElement('div');
@@ -14,6 +16,7 @@ export class TabbedDisplay{
         if(!this.hourlyTab && !this.dailyTab){
             this.constructHourlyTab(hourlyData);
             this.constructDailyTab(dailyData);
+            this.removeTemplateElement();
         }else{
             this.updateHourlyTab(hourlyData);
             this.updateDailyTab(dailyData);
@@ -37,13 +40,8 @@ export class TabbedDisplay{
         for(let i = 0; i < hourlyData.length; i++){
             let dataItem = hourlyData[i];
             let item = this.htmlEl.querySelector('#item').content.firstElementChild.cloneNode(true);
-            item.querySelector(".date").textContent = dataItem.date;
 
-            item.querySelector('i').classList = this.getIconClass(dataItem.weather[0].id);
-
-            item.querySelector(".hourOrDay").textContent = dataItem.hour + ":00";
-            
-            item.querySelector(".temps").querySelector("h4").textContent = dataItem.temp + "°C";
+            this.setHourlyItemData(item, dataItem);
 
             this.hourlyTab.appendChild(item);
         }
@@ -56,16 +54,20 @@ export class TabbedDisplay{
             let dataItem = hourlyData[i];
             let item = items[i];
 
-            item.querySelector(".date").textContent = dataItem.date;
-
-            item.querySelector('i').classList = this.getIconClass(dataItem.weather[0].id);
-
-            item.querySelector(".hourOrDay").textContent = dataItem.hour + ":00";
-            
-            item.querySelector(".temps").querySelector("h4").textContent = dataItem.temp + "°C";
+            this.setHourlyItemData(item, dataItem);
 
             this.hourlyTab.appendChild(item);
         }
+    }
+
+    setHourlyItemData(item, dataItem){
+        item.querySelector(".date").textContent = dataItem.date;
+
+        item.querySelector('i').classList = getIconClassNameForWeatherCode(dataItem.weather[0].id);
+
+        item.querySelector(".hourOrDay").textContent = dataItem.hour + ":00";
+            
+        item.querySelector(".temps").querySelector("h4").textContent = dataItem.temp + "°C";
     }
 
 
@@ -75,12 +77,8 @@ export class TabbedDisplay{
         for(let i = 0; i < dailyData.length; i++){
             let dataItem = dailyData[i];
             let item = this.htmlEl.querySelector('#item').content.firstElementChild.cloneNode(true);
-            item.querySelector(".date").textContent = dataItem.date;
-
-            item.querySelector('i').classList = this.getIconClass(dataItem.weather[0].id);
-            item.querySelector(".hourOrDay").textContent = dataItem.dayName;
             
-            item.querySelector(".temps").querySelector("h4").textContent = Math.round(dataItem.temp.max) + "°C / " + Math.round(dataItem.temp.min) + "°C";
+            this.setDailyItemData(item, dataItem);
 
             this.dailyTab.appendChild(item);
         }
@@ -94,42 +92,25 @@ export class TabbedDisplay{
             let dataItem = dailyData[i];
             let item = items[i];
             
-            item.querySelector(".date").textContent = dataItem.date;
-
-            item.querySelector('i').classList = this.getIconClass(dataItem.weather[0].id);
-            item.querySelector(".hourOrDay").textContent = dataItem.dayName;
-            
-            item.querySelector(".temps").querySelector("h4").textContent = Math.round(dataItem.temp.max) + "°C / " + Math.round(dataItem.temp.min) + "°C";
+            this.setDailyItemData(item, dataItem);
 
             this.dailyTab.appendChild(item);
         }
         this.dailyTab.classList.add("hidden");
     }
 
-    getIconClass(code){
-        const codeFirstDigit = parseInt(code.toString().charAt(0));
-        if(codeFirstDigit == 2){
-            return "fa-solid fa-cloud-bolt fa-fw";
-        }
-        else if(codeFirstDigit == 3){
-            return "fa-solid fa-cloud-sun-rain fa-fw";
-        }
-        else if(codeFirstDigit == 5){
-            return "fa-solid fa-cloud-showers-heavy fa-fw";
-        }
-        else if(codeFirstDigit == 6){
-            return "fa-solid fa-cloud-meatball fa-fw";
-        }
-        else if(codeFirstDigit == 7){
-            return "fa-solid fa-smog fa-fw";
-        }
-        else if(codeFirstDigit == 8){
-            if(code == 800){
-                return "fa-solid fa-sun fa-fw";
-            }else{
-                return "fa-solid fa-cloud fa-fw";
-            }
-        }
+    setDailyItemData(item, dataItem){
+        item.querySelector(".date").textContent = dataItem.date;
+
+        item.querySelector('i').classList = getIconClassNameForWeatherCode(dataItem.weather[0].id);
+
+        item.querySelector(".hourOrDay").textContent = dataItem.dayName;
+
+        item.querySelector(".temps").querySelector("h4").textContent = Math.round(dataItem.temp.max) + "°C / " + Math.round(dataItem.temp.min) + "°C";
+    }
+
+    removeTemplateElement(){
+        this.htmlEl.querySelector("#item").remove();
     }
 
     getElement(){
