@@ -11,7 +11,7 @@ export class MainDisplay{
     updateDisplay(data){
         this.htmlEl.querySelector('.cityName').textContent = data.city;
         this.htmlEl.querySelector('.temperature').textContent = data.temperature + "°C";
-        this.htmlEl.querySelector('.chanceOfRain').textContent = "Chance of rain: " + data.chanceOfRain + "%";
+        this.htmlEl.querySelector('.chanceOfRain').textContent = "Chance of rain: " + Math.round(data.chanceOfRain) + "%";
         const codeFirstDigit = parseInt(data.code.toString().charAt(0));
         if(codeFirstDigit == 2){
             this.htmlEl.querySelector('i').classList = "fa-solid fa-cloud-bolt";

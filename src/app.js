@@ -95,7 +95,8 @@ class App{
       this.removeMessage();
     }
     catch{
-
+      this.removeMessage();
+      this.displayMessage({"title": "Oops! Something went wrong", "text": "Loading your location isn't available in your browser, or you've blocked it."})
     }
     
   }
@@ -138,7 +139,11 @@ class App{
     for(let i = 0; i < 7; i++){
       let day = data.daily[i];
       let date = new Date(day.dt * 1000);
-      day.dayName = days[date.getDay()];
+      if(i == 0){
+        day.dayName = "Today";
+      }else{
+        day.dayName = days[date.getDay()];
+      }
       day.date = String(date.getDate()).padStart(2, '0') + '/' + String(date.getMonth() + 1).padStart(2, '0');
       dailyData[i] = day;
     }
@@ -183,10 +188,11 @@ class App{
   async getWeatherForSearch(value){
     try{
       this.removeMessage();
-      this.displayMessage({"title": "Loading...", "text": "We're trying to load your location"})
+      this.displayMessage({"title": "Loading...", "text": "We're loading weather information"})
 
       let location = await this.weather.getLocationFromCityName(value);
-      const data = await this.weather.getWeatherForLocation(location.lat, location.lon, location);
+      const data = await this.weather.getWeatherForLocation(location.lat, location.lon, location.name);
+      
       const parsed = this.parseRawWeatherData(data);
 
       this.mainDisplay.updateDisplay(parsed.mainDisplayData);
@@ -207,3 +213,5 @@ class App{
 
 const app = new App();
 app.tryCurrentLocation();
+
+

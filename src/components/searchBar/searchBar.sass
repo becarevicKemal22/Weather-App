@@ -36,3 +36,34 @@
         background: linear-gradient(90deg, $color-primary, $color-secondary)
         color: white
         cursor: pointer
+
+.pac-container
+    background: linear-gradient(90deg, $color-dark-lighter, $color-dark)
+    padding: 0.5em
+
+    .pac-icon
+        display: none
+
+    .pac-item
+        color: white
+        border: none
+        padding: 0.4em
+        border-radius: 0.25em
+        font-size: 0.5em !important
+
+        &:hover
+            background: linear-gradient(90deg, $color-primary, $color-secondary)
+        
+        &:-ms-keyboard-active
+            background: linear-gradient(90deg, $color-primary, $color-secondary)
+
+        .pac-item-query
+            color: white
+            font-size: 2em
+
+            .pac-matched
+                font-weight: normal
+                font-size: 1em
+
+    .pac-item-selected
+        background: linear-gradient(90deg, $color-primary, $color-secondary)

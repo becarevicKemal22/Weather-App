@@ -1,18 +1,20 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 module.exports = {
-  mode: "production",
+  mode: "development",
   entry: './src/app.js',
-  devtool: 'inline-source-map',
   devServer: {
     static: './dist',
   },
+  devtool: 'inline-source-map',
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
     clean: true,
   },
+
   module: {
     rules: [
       {

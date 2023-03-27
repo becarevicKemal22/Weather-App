@@ -78,7 +78,6 @@ export class TabbedDisplay{
             item.querySelector(".date").textContent = dataItem.date;
 
             item.querySelector('i').classList = this.getIconClass(dataItem.weather[0].id);
-            console.log(dataItem);
             item.querySelector(".hourOrDay").textContent = dataItem.dayName;
             
             item.querySelector(".temps").querySelector("h4").textContent = Math.round(dataItem.temp.max) + "°C / " + Math.round(dataItem.temp.min) + "°C";
@@ -98,7 +97,6 @@ export class TabbedDisplay{
             item.querySelector(".date").textContent = dataItem.date;
 
             item.querySelector('i').classList = this.getIconClass(dataItem.weather[0].id);
-            console.log(dataItem);
             item.querySelector(".hourOrDay").textContent = dataItem.dayName;
             
             item.querySelector(".temps").querySelector("h4").textContent = Math.round(dataItem.temp.max) + "°C / " + Math.round(dataItem.temp.min) + "°C";
