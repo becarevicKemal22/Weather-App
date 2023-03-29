@@ -135,7 +135,7 @@ class App{
       "UV": data.current.uvi
     }
 
-    const hourlyData = [];
+    const hourlyData = []
     let currentAddedHours = 2;
     for(let i = 0; i < 7; i++){
       
