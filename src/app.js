@@ -14,7 +14,7 @@ class App{
     this.leftSide = this.main.querySelector('.displays');
     this.rightSide = this.main.querySelector('.secondDisplay');
     this.buttonContainer = this.rightSide.querySelector(".tabs");
-    this.messageDisplay = this.main.querySelector('messageDisplay');
+    this.messageDisplay = this.main.querySelector('.messageDisplay');
 
     this.searchBar = new SearchBar();
     this.leftSide.appendChild(this.searchBar.getElement());
@@ -157,7 +157,7 @@ class App{
     for(let i = 0; i < 7; i++){
       let day = data.daily[i];
       let date = new Date(day.dt * 1000);
-      if(i == 0){
+      if(i === 0){
         day.dayName = "Today";
       }else{
         day.dayName = days[date.getDay()];
