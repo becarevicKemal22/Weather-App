@@ -24,11 +24,11 @@ export class TabbedDisplay{
     }
 
     changeTab(tabNumber){
-        if(tabNumber == 1){
+        if(tabNumber === 1){
             this.hourlyTab.classList.remove("hidden");
             this.dailyTab.classList.add("hidden");
         }
-        else if(tabNumber == 2){
+        else if(tabNumber === 2){
             this.hourlyTab.classList.add("hidden");
             this.dailyTab.classList.remove("hidden");
         }
