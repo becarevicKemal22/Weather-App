@@ -20,27 +20,23 @@ export class SecondaryDisplay{
 
         this.mInfoTab = this.htmlEl.querySelector('.sides');
 
-        const data = [
-            {hour: 12, precipitation: 0.25},
-            {hour: 13, precipitation: 0.35},
-            {hour: 14, precipitation: 0.7},
-            {hour: 15, precipitation: 0.1},
-            {hour: 16, precipitation: 0},
-
-        ]
+        const data = [];
 
         this.precipitationTab = this.htmlEl.querySelector('.precipitation');
         this.precipitationChart = new Chart(this.htmlEl.querySelector('#precipitationChart'), {
             type: 'bar',
             data: {
-                labels: data.map(row => row.hour),
+                labels: data.map(row => row.x),
                 datasets: [{
                     label: 'Precipitation',
-                    data: data.map(row => row.precipitation),
+                    data: data.map(row => row.y),
                 }]
             },
             options: {
                 animation: false,
+                responsive: true,
+                maintainAspectRatio: true,
+                aspectRatio: 3,
                 scales: {
                     y: {
                         grid: {
@@ -53,6 +49,15 @@ export class SecondaryDisplay{
                                 return value * 100 + "%";
                             },
                             color: 'white',
+                            font:
+                                function(context) {
+                                    let width = context.chart.width;
+                                    let size = Math.round(width / 45);
+
+                                    return {
+                                        size: size
+                                    };
+                                }
                         },
 
                     },
@@ -65,13 +70,100 @@ export class SecondaryDisplay{
                                 return index % 3 === 0 ? this.getLabelForValue(val) + ":00" : '';
                             },
                             color: 'white',
+                            maxRotation: 0,
+                            minRotation: 0,
+                            autoSkip: false,
+                            font:
+                                function(context) {
+                                    let width = context.chart.width;
+                                    let size = Math.round(width / 45);
+
+                                    return {
+                                        size: size
+                                    };
+                                }
+
                         }
                     }
                 },
                 plugins: {
                     legend: {
                         position: "bottom",
-                        display: false
+                        display: false,
+                    },
+                    tooltip: {
+                        enabled: false,
+                    }
+                },
+            },
+        })
+
+        this.temperatureTab = this.htmlEl.querySelector('.temperature');
+        this.temperatureChart = new Chart(this.htmlEl.querySelector('#temperatureChart'), {
+            type: 'bar',
+            data: {
+                labels: data.map(row => row.x),
+                datasets: [{
+                    label: 'Temperature',
+                    data: data.map(row => row.y),
+                }]
+            },
+            options: {
+                animation: false,
+                responsive: true,
+                maintainAspectRatio: true,
+                aspectRatio: 3,
+                scales: {
+                    y: {
+                        grid: {
+                            display: false,
+                        },
+                        ticks: {
+                            callback: function(value) {
+                                return Math.round(value) + "°C";
+                            },
+                            color: 'white',
+                            font:
+                                function(context) {
+                                    let width = context.chart.width;
+                                    let size = Math.round(width / 45);
+
+                                    return {
+                                        size: size
+                                    };
+                                }
+                        },
+
+                    },
+                    x: {
+                        grid: {
+                            display: false,
+                        },
+                        ticks: {
+                            callback: function(val, index) {
+                                return index % 3 === 0 ? this.getLabelForValue(val) + ":00" : '';
+                            },
+                            color: 'white',
+                            maxRotation: 0,
+                            minRotation: 0,
+                            autoSkip: false,
+                            font:
+                                function(context) {
+                                    let width = context.chart.width;
+                                    let size = Math.round(width / 45);
+
+                                    return {
+                                        size: size
+                                    };
+                                }
+
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: "bottom",
+                        display: false,
                     },
                     tooltip: {
                         enabled: false,
@@ -81,13 +173,18 @@ export class SecondaryDisplay{
 
         })
 
-        this.tabs = [this.mInfoTab, this.precipitationTab];
+        this.tabs = [this.mInfoTab, this.precipitationTab, this.temperatureTab];
         this.tabs.forEach(tab => {
             tab.classList.add('hidden');
         });
         this.tabs[0].classList.remove('hidden');
     }
 
+    update(data, precipitationData, temperatureData){
+        this.updateDisplay(data);
+        this.updateChartData(this.precipitationChart, precipitationData);
+        this.updateChartData(this.temperatureChart, temperatureData);
+    }
     updateDisplay(data){
         this.htmlEl.querySelector('#fl').textContent = Math.round(data.feelsLike) + "°C";
         this.htmlEl.querySelector('#h').textContent = data.humidity + "%";
@@ -105,6 +202,31 @@ export class SecondaryDisplay{
             tab.classList.add('hidden');
         })
         this.tabs[num].classList.remove('hidden');
+    }
+
+    clearChart(chart){
+        while(chart.data.labels.length > 0){
+            chart.data.labels.pop();
+            chart.data.datasets.forEach((dataset) => {
+                dataset.data.pop();
+            });
+        }
+        chart.update();
+    }
+
+    addChartColumn(chart, label, data){
+        chart.data.labels.push(label);
+        chart.data.datasets.forEach((dataset) => {
+            dataset.data.push(data);
+        });
+    }
+
+    updateChartData(chart, data){
+        this.clearChart(chart);
+        data.forEach(row => {
+            this.addChartColumn(chart, row.x, row.y);
+        })
+        chart.update();
     }
 
     getElement(){

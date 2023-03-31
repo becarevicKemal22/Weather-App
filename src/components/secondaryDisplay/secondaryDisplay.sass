@@ -18,6 +18,9 @@
         color: white
         cursor: pointer
 
+        border-bottom-right-radius: 0.5em
+        border-bottom-left-radius: 0.5em
+
         h2
             font-weight: normal
             color: $color-muted
@@ -31,6 +34,7 @@
 
         &:first-child
             border-top-left-radius: 0.5em
+            border-bottom-left-radius: 0
         &:last-child
             border-bottom-right-radius: 0.5em
 
@@ -45,6 +49,7 @@
         flex-direction: column
         justify-content: space-between
         gap: 1em
+        width: 100%
 
         p
             color: $color-muted
@@ -55,4 +60,24 @@
             font-size: 1.4em
 
     .hidden
-        display: none
+        display: none !important
+
+    .precipitation, .temperature
+        position: relative
+        display: flex
+        justify-content: center
+        padding: 0.5em
+        max-height: 197px
+        margin: 0
+        canvas
+            margin: 0 !important
+
+@media screen and (max-width: 768px)
+    .secondaryDisplay
+        .precipitation
+            max-height: 100px
+
+@media screen and (min-width: 767px) and (max-width: 992px)
+    .secondaryDisplay
+        .precipitation
+            max-height: 120px

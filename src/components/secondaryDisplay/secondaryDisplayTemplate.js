@@ -4,7 +4,10 @@ export default `
             <h2 id="mInfo">More info</h2>
         </div>
         <div class="tab">
-            <h2 id="precipitation">Precipitation</h2>
+            <h2 id="precipitation">Rain</h2>
+        </div>
+        <div class="tab">
+            <h2 id="temperature">Temperature</h2>
         </div>
     </div>
     <div class="sides">
@@ -33,5 +36,8 @@ export default `
     </div>
     <div class="precipitation">
         <canvas id="precipitationChart"></canvas>
+    </div>
+    <div class="temperature">
+        <canvas id="temperatureChart"></canvas>
     </div>
 `

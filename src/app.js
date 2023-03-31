@@ -32,8 +32,6 @@ class App{
             this.searchBar.getElement().querySelector('input').value = "";
         });
 
-        console.log(document.querySelector('.pac-container'));
-
         this.mainDisplay = new MainDisplay();
         this.leftSide.appendChild(this.mainDisplay.getElement());
 
@@ -103,7 +101,7 @@ class App{
             const data = await this.weather.getWeatherForLocation(location.lat, location.lon);
             const parsed = this.parseRawWeatherData(data);
             this.mainDisplay.updateDisplay(parsed.mainDisplayData);
-            this.secondaryDisplay.updateDisplay(parsed.secondaryDisplayData);
+            this.secondaryDisplay.update(parsed.secondaryDisplayData, parsed.precipitationChartData, parsed.temperatureChartData);
             this.tabbedDisplay.updateDisplay(parsed.hourlyData, parsed.dailyData);
             this.removeMessage();
         }
@@ -161,11 +159,38 @@ class App{
             dailyData[i] = day;
         }
 
+        const precipitationChartData = [];
+        const temperatureChartData = [];
+        for(let i = 0; i < 19; i++){
+            let h = hour + i;
+            if(h >= 24){
+                h = h - 24;
+            }
+            let dataItemPrec = {
+                x: h,
+                y: data.hourly[i].pop,
+            }
+            let dataItemTemp = {
+                x: h,
+                y: data.hourly[i].temp,
+            }
+            if(dataItemPrec.y === 0){
+                dataItemPrec.y = 0.01;
+            }
+            if(dataItemTemp.y === 0){
+                dataItemTemp.y = 0.01;
+            }
+            precipitationChartData.push(dataItemPrec);
+            temperatureChartData.push(dataItemTemp);
+        }
+
         return {
             "mainDisplayData": mainDisplayData,
             "secondaryDisplayData": secondaryDisplayData,
             "hourlyData": hourlyData,
-            "dailyData": dailyData
+            "dailyData": dailyData,
+            "precipitationChartData": precipitationChartData,
+            "temperatureChartData": temperatureChartData,
         }
     }
 
@@ -209,7 +234,7 @@ class App{
             const parsed = this.parseRawWeatherData(data);
 
             this.mainDisplay.updateDisplay(parsed.mainDisplayData);
-            this.secondaryDisplay.updateDisplay(parsed.secondaryDisplayData);
+            this.secondaryDisplay.update(parsed.secondaryDisplayData, parsed.precipitationChartData, parsed.temperatureChartData);
             this.tabbedDisplay.updateDisplay(parsed.hourlyData, parsed.dailyData);
 
             this.hourlyButton.setActive();
