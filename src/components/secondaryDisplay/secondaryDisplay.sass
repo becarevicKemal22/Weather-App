@@ -66,6 +66,7 @@
         position: relative
         display: flex
         justify-content: center
+        align-items: center
         padding: 0.5em
         max-height: 197px
         margin: 0
@@ -74,10 +75,10 @@
 
 @media screen and (max-width: 768px)
     .secondaryDisplay
-        .precipitation
+        .precipitation, .temperature
             max-height: 100px
 
 @media screen and (min-width: 767px) and (max-width: 992px)
     .secondaryDisplay
-        .precipitation
+        .precipitation .temperature
             max-height: 120px

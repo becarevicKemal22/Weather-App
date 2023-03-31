@@ -16,11 +16,14 @@ body
 
 .main
     padding: 5em
-    display: flex
-    justify-content: center
+    display: grid
+    grid-template-columns: 1fr 1fr
+    justify-items: center
+    align-items: center
     gap: 1.75em
 
-.displays
+.leftSide
+    width: 100%
     display: flex
     flex-direction: column
     justify-content: space-between
@@ -31,6 +34,13 @@ body
 
     &.message
         justify-content: center
+
+    .displayContainer
+        margin: 0
+        padding: 0
+        display: grid
+        grid-template-rows: 1fr 1fr
+        gap: 1.2em
 
 .messageTitle
     color: #ffffff
@@ -44,6 +54,7 @@ body
     align-self: center
 
 .secondDisplay
+    width: 100%
     display: flex
     flex-direction: column
     justify-content: space-between
@@ -64,8 +75,8 @@ body
         font-size: 0.85rem
         
     .main
-        flex-direction: column
-        align-items: stretch
+        grid-template-columns: 1fr
+        grid-template-rows: 1fr 1fr
         padding: 2.5em
 
 @media screen and (min-width: 767px) and (max-width: 992px)

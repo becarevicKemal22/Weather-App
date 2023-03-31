@@ -11,7 +11,7 @@ class App{
         this.weather = new Weather();
 
         this.main = document.querySelector('.main');
-        this.leftSide = this.main.querySelector('.displays');
+        this.leftSide = this.main.querySelector('.leftSide');
         this.rightSide = this.main.querySelector('.secondDisplay');
         this.buttonContainer = this.rightSide.querySelector(".tabs");
         this.messageDisplay = this.main.querySelector('.messageDisplay');
@@ -32,11 +32,16 @@ class App{
             this.searchBar.getElement().querySelector('input').value = "";
         });
 
+        this.displayContainer = document.createElement('div');
+        this.displayContainer.classList.add('displayContainer');
+
         this.mainDisplay = new MainDisplay();
-        this.leftSide.appendChild(this.mainDisplay.getElement());
+        this.displayContainer.appendChild(this.mainDisplay.getElement());
 
         this.secondaryDisplay = new SecondaryDisplay();
-        this.leftSide.appendChild(this.secondaryDisplay.getElement());
+        this.displayContainer.appendChild(this.secondaryDisplay.getElement());
+
+        this.leftSide.appendChild(this.displayContainer);
 
         this.hourlyButton = new TabButton("Today");
         this.hourlyButton.setActive();
@@ -216,8 +221,8 @@ class App{
         this.title.remove();
         this.text.remove();
 
-        this.leftSide.appendChild(this.mainDisplay.getElement());
-        this.leftSide.appendChild(this.secondaryDisplay.getElement());
+        this.displayContainer.appendChild(this.mainDisplay.getElement());
+        this.displayContainer.appendChild(this.secondaryDisplay.getElement());
         this.leftSide.classList.remove("message");
 
         this.rightSide.classList.remove("hidden");
