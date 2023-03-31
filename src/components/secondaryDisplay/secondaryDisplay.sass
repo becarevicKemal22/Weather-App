@@ -62,7 +62,7 @@
     .hidden
         display: none !important
 
-    .precipitation, .temperature
+    @mixin chartContainer
         position: relative
         display: flex
         justify-content: center
@@ -73,12 +73,18 @@
         canvas
             margin: 0 !important
 
+    .precipitation
+        @include chartContainer
+
+    .temperature
+        @include chartContainer
+
 @media screen and (max-width: 768px)
     .secondaryDisplay
         .precipitation, .temperature
-            max-height: 100px
+            max-height: 117px
 
 @media screen and (min-width: 767px) and (max-width: 992px)
     .secondaryDisplay
-        .precipitation .temperature
-            max-height: 120px
+        .precipitation, .temperature
+            max-height: 134px
