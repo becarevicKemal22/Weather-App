@@ -1,5 +1,12 @@
 export default `
-    <h2 id="mInfo">More info</h2>
+    <div class="tabs">
+        <div class="tab">
+            <h2 id="mInfo">More info</h2>
+        </div>
+        <div class="tab">
+            <h2 id="precipitation">Precipitation</h2>
+        </div>
+    </div>
     <div class="sides">
         <div class="side">
             <div class="group">
@@ -23,5 +30,8 @@ export default `
                 <h2 id="UV"></h2>
             </div>
         </div>
+    </div>
+    <div class="precipitation">
+        <canvas id="precipitationChart"></canvas>
     </div>
 `

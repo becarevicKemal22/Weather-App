@@ -5,16 +5,34 @@
     background-image: linear-gradient(90deg, $color-dark-lighter, $color-dark)
     border-radius: 0.5em
 
-    #mInfo
+    .tabs
+        display: flex
+        justify-content: flex-start
+        gap: 0
+    .tab
         width: 13ch
         text-align: center
-        background-image: linear-gradient(90deg, $color-primary, $color-secondary)
+        background-color: darken($color-dark-lighter, 2%)
 
         padding: 0.25em
         color: white
-        border-bottom-right-radius: 0.5em
-        border-top-left-radius: 0.5em
-        font-weight: normal
+        cursor: pointer
+
+        h2
+            font-weight: normal
+            color: $color-muted
+
+        &.selected
+            background-image: linear-gradient(90deg, $color-primary, $color-secondary)
+
+        &.selected h2
+            font-weight: bold
+            color: white
+
+        &:first-child
+            border-top-left-radius: 0.5em
+        &:last-child
+            border-bottom-right-radius: 0.5em
 
     .sides
         padding: 1em 1.25em 1.25em
@@ -35,3 +53,6 @@
             color: #ffffff
             padding: 0.25em 1em
             font-size: 1.4em
+
+    .hidden
+        display: none

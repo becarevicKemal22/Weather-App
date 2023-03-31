@@ -40,13 +40,13 @@ class App{
         this.secondaryDisplay = new SecondaryDisplay();
         this.leftSide.appendChild(this.secondaryDisplay.getElement());
 
-        this.hourlyButton = new TabButton("Hourly");
+        this.hourlyButton = new TabButton("Today");
         this.hourlyButton.setActive();
 
 
         this.buttonContainer.appendChild(this.hourlyButton.getElement());
 
-        this.dailyButton = new TabButton("7-Day");
+        this.dailyButton = new TabButton("Next 7 days");
         this.buttonContainer.appendChild(this.dailyButton.getElement());
 
         this.tabbedDisplay = new TabbedDisplay();
