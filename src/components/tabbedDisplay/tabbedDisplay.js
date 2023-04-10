@@ -63,7 +63,7 @@ export class TabbedDisplay{
     setHourlyItemData(item, dataItem){
         item.querySelector(".date").textContent = dataItem.date;
 
-        item.querySelector('i').classList = getIconClassNameForWeatherCode(dataItem.weather[0].id);
+        item.querySelector('i').classList = getIconClassNameForWeatherCode(dataItem.weather[0].id, dataItem.night);
 
         item.querySelector(".hourOrDay").textContent = dataItem.hour + ":00";
             

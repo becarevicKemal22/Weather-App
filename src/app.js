@@ -118,12 +118,17 @@ class App{
     }
 
     parseRawWeatherData(data){
+        const currentTime = data.current.dt;
+        const sunset = data.current.sunset;
+        const sunrise = data.current.sunrise + 86400;
         const hour = new Date().getHours();
+
         const mainDisplayData = {
             "city": data.city,
             "temperature": Math.round(data.current.temp),
             "chanceOfRain": data.hourly[0].pop * 100,
-            "code": data.current.weather[0].id
+            "code": data.current.weather[0].id,
+            "night": (currentTime > sunset && currentTime < sunrise),
         }
 
         const secondaryDisplayData = {
@@ -146,6 +151,7 @@ class App{
             let date = new Date(dataForHour.dt * 1000);
             dataForHour.date = String(date.getDate()).padStart(2, '0') + '/' + String(date.getMonth() + 1).padStart(2, '0');
             dataForHour.temp = String(Math.round(dataForHour.temp)).padStart(2, ' ');
+            dataForHour.night = (dataForHour.dt > sunset && dataForHour.dt < sunrise);
             hourlyData[i] = dataForHour;
             currentAddedHours += 3;
         }
