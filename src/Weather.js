@@ -39,7 +39,7 @@ export class Weather{
     }
 }
 
-export function getIconClassNameForWeatherCode(code){
+export function getIconClassNameForWeatherCode(code, night = false){
     const codeFirstDigit = parseInt(code.toString().charAt(0));
     if(codeFirstDigit == 2){
         return "fa-solid fa-cloud-bolt fa-fw";
