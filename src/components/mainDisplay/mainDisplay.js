@@ -14,7 +14,7 @@ export class MainDisplay{
         this.htmlEl.querySelector('.cityName').textContent = data.city;
         this.htmlEl.querySelector('.temperature').textContent = data.temperature + "°C";
         this.htmlEl.querySelector('.chanceOfRain').textContent = "Chance of rain: " + Math.round(data.chanceOfRain) + "%";
-        this.htmlEl.querySelector('i').classList = getIconClassNameForWeatherCode(data.code);
+        this.htmlEl.querySelector('i').classList = getIconClassNameForWeatherCode(data.code, data.night);
     }
 
     getElement(){
