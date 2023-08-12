@@ -23,9 +23,9 @@ The site is hosted [here](https://forecast.becarevic.net/), so be sure to check 
 
 The site is built using these technologies:
 
-Javascript <img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/javascript-colored.svg" alt="JavaScript" width="18" height="18">
-Sass <img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/sass-colored.svg" alt="Sass" width="18" height="18">
-Webpack <img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/webpack-colored.svg" alt="Webpack" width="18" height="18">
+Javascript <img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/javascript-colored.svg" alt="JavaScript" width="18" height="18"> <br>
+Sass <img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/sass-colored.svg" alt="Sass" width="18" height="18"> <br>
+Webpack <img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/webpack-colored.svg" alt="Webpack" width="18" height="18"> <br>
 
 ## Roadmap
 
